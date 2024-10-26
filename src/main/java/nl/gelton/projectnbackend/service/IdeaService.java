@@ -9,6 +9,8 @@ public interface IdeaService {
 
     Response getAllIdeas();
 
+    Response getAllIdeasByUser();
+
     Response getIdeaById(Long ideaId);
 
     Response updateIdea(Long ideaId, IdeaInputDto ideaInputDto);

@@ -19,8 +19,8 @@ public class IdeaOutputDto {
     private Long id;
     private String title;
     private String description;
-      private UserOutputDto user;
-//    private List<CommentOutputDto> comments;
+    private UserOutputDto user;
+//      private List<CommentOutputDto> comments;
 //    private Set<PoliticalPartyOutputDto> politicalLikes;
 //    private Set<UserOutputDto> userLikes;
     private LocalDateTime createdAt;

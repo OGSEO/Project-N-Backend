@@ -32,6 +32,11 @@ public class IdeaController {
         return ResponseEntity.ok(ideaService.getAllIdeas());
     }
 
+    @GetMapping("/get-all-by-user")
+    public ResponseEntity<Response> getAllIdeasFromUser() {
+        return ResponseEntity.ok(ideaService.getAllIdeas());
+    }
+
     @GetMapping("/get-idea-by-id/{ideaId}")
     public ResponseEntity<Response> getIdeaById(@PathVariable Long ideaId) {
         return ResponseEntity.ok(ideaService.getIdeaById(ideaId));

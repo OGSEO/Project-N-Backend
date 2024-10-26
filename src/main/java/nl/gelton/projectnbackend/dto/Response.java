@@ -3,10 +3,7 @@ package nl.gelton.projectnbackend.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import nl.gelton.projectnbackend.dto.output.AddressOutputDto;
-import nl.gelton.projectnbackend.dto.output.IdeaOutputDto;
-import nl.gelton.projectnbackend.dto.output.PoliticalPartyOutputDto;
-import nl.gelton.projectnbackend.dto.output.UserOutputDto;
+import nl.gelton.projectnbackend.dto.output.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,12 +25,12 @@ public class Response {
     private AddressOutputDto address;
     private PoliticalPartyOutputDto party;
     private IdeaOutputDto idea;
-//    private CommentOutputDto comment;
+    private CommentOutputDto comment;
 
     private List<UserOutputDto> userList;
     private List<PoliticalPartyOutputDto> partyList;
     private List<IdeaOutputDto> ideaList;
-//    private List<CommentOutputDto> commentList;
+    private List<CommentOutputDto> commentList;
 
 //    private ProfileImage profileImage;
 

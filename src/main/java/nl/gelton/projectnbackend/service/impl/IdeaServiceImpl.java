@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.gelton.projectnbackend.dto.Response;
 import nl.gelton.projectnbackend.dto.input.IdeaInputDto;
+import nl.gelton.projectnbackend.dto.mapper.CommentMapper;
 import nl.gelton.projectnbackend.dto.mapper.IdeaMapper;
+import nl.gelton.projectnbackend.dto.output.CommentOutputDto;
 import nl.gelton.projectnbackend.dto.output.IdeaOutputDto;
 import nl.gelton.projectnbackend.exception.RecordNotFoundException;
+import nl.gelton.projectnbackend.model.Comment;
 import nl.gelton.projectnbackend.model.Idea;
 import nl.gelton.projectnbackend.model.User;
 import nl.gelton.projectnbackend.repository.IdeaRepository;
@@ -100,6 +103,25 @@ public class IdeaServiceImpl implements IdeaService {
         return Response.builder()
                 .statusCode(200)
                 .statusMessage("Idea Deleted Successfully")
+                .build();
+    }
+
+    @Override
+    public Response getAllIdeasByUser() {
+
+        User user = userService.getLoggedUser();
+
+        List<Idea> ideas = ideaRepository.findByUserId(user.getId());
+        List<IdeaOutputDto> ideaOutputDtos = new ArrayList<>();
+
+        for (Idea idea : ideas) {
+            ideaOutputDtos.add(IdeaMapper.fromModelToOutputDto(idea));
+        }
+
+        return Response.builder()
+                .statusCode(200)
+                .statusMessage("Comments Found Successfully")
+                .ideaList(ideaOutputDtos)
                 .build();
     }
 

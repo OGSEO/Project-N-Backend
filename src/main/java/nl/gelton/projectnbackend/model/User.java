@@ -56,8 +56,8 @@ public class User extends BaseEntity{
 //    @ManyToMany(mappedBy = "userLikes", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 //    private Set<Idea> likedIdeas = new HashSet<>();
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 
 }
 

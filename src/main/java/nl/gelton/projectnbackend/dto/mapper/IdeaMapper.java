@@ -1,8 +1,10 @@
 package nl.gelton.projectnbackend.dto.mapper;
 
 import nl.gelton.projectnbackend.dto.input.IdeaInputDto;
+import nl.gelton.projectnbackend.dto.output.CommentOutputDto;
 import nl.gelton.projectnbackend.dto.output.IdeaOutputDto;
 import nl.gelton.projectnbackend.dto.output.UserOutputDto;
+import nl.gelton.projectnbackend.model.Comment;
 import nl.gelton.projectnbackend.model.Idea;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class IdeaMapper {
         ideaOutputDto.setDescription(idea.getDescription());
         ideaOutputDto.setCreatedAt(idea.getCreatedAt());
         ideaOutputDto.setUser(UserMapper.fromModelToOutputDto(idea.getUser()));
+//        ideaOutputDto.setComments(CommentMapper.fromModelToOutputDto(idea.getComments()));
 
 
 ////        if (idea.getUserLikes() != null) {
@@ -43,7 +46,7 @@ public class IdeaMapper {
 //            comments.add(CommentMapper.fromModelToOutputDto(comment));
 //        }
 //        ideaOutputDto.setComments(comments);
-//        }
+
 
 //        for (Idea idea : ideas) {
 //            ideaOutputDtos.add(IdeaMapper.fromModelToOutputDto(idea));
