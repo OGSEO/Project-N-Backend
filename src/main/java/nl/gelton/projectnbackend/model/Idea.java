@@ -4,15 +4,17 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "ideas")
 public class Idea extends BaseEntity {
@@ -38,18 +40,20 @@ public class Idea extends BaseEntity {
 //    private List<PoliticalParty> politicalPartyLikes = new ArrayList<>();
 
 
-//    @JsonIgnore
-//    @ManyToMany
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_owner")
+    private User user;
+
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(
 //            name = "ideas_users",
 //            joinColumns = @JoinColumn(name = "idea_liked"),
 //            inverseJoinColumns = @JoinColumn(name = "user_liked")
 //    )
-//    private Set<User> userLikes = new HashSet<>();
-
-//    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_owner")
-    private User user;
+    private Set<User> userLikes = new HashSet<>();
 
 }

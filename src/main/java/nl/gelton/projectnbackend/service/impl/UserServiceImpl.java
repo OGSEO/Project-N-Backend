@@ -1,5 +1,6 @@
 package nl.gelton.projectnbackend.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.gelton.projectnbackend.dto.LoginRequest;
@@ -9,10 +10,15 @@ import nl.gelton.projectnbackend.dto.mapper.UserMapper;
 import nl.gelton.projectnbackend.dto.output.UserOutputDto;
 import nl.gelton.projectnbackend.enums.UserRole;
 import nl.gelton.projectnbackend.exception.InvalidCredentialsException;
+import nl.gelton.projectnbackend.exception.RecordNotFoundException;
+import nl.gelton.projectnbackend.model.ProfileImage;
 import nl.gelton.projectnbackend.model.User;
+import nl.gelton.projectnbackend.repository.FileUploadRepository;
 import nl.gelton.projectnbackend.repository.UserRepository;
 import nl.gelton.projectnbackend.security.jwt.JwtUtils;
+import nl.gelton.projectnbackend.service.AvatarService;
 import nl.gelton.projectnbackend.service.UserService;
+import org.springframework.core.io.Resource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -31,8 +38,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
-//    private final FileUploadRepository fileUploadRepository;
-//    private final AvatarService avatarService;
+    private final FileUploadRepository fileUploadRepository;
+    private final AvatarService avatarService;
 
     @Override
     public Response registerUser(UserInputDto registrationRequest) {
@@ -114,32 +121,32 @@ public class UserServiceImpl implements UserService {
     }
 
 
-//    @Transactional
-//    public Resource getAvatarFromUser(Long userId){
-//        Optional<User> optionalUser = userRepository.findById(userId);
-//        if(optionalUser.isEmpty()){
-//            throw new RecordNotFoundException("User with id " + userId + " not found.");
-//        }
-//        ProfileImage avatar = optionalUser.get().getProfileImage();
-//        if(avatar == null){
-//            throw new RecordNotFoundException("User " + userId + " had no avatar.");
-//        }
-//        return avatarService.downLoadFile(avatar.getFileName());
-//    }
+    @Transactional
+    public Resource getAvatarFromUser(Long userId){
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if(optionalUser.isEmpty()){
+            throw new RecordNotFoundException("User with id " + userId + " not found.");
+        }
+        ProfileImage avatar = optionalUser.get().getProfileImage();
+        if(avatar == null){
+            throw new RecordNotFoundException("User " + userId + " had no avatar.");
+        }
+        return avatarService.downLoadFile(avatar.getFileName());
+    }
 
-//    @Transactional
-//    public User assignAvatarToUser(String filename, Long userId) {
-//        Optional<User> optionalUser = userRepository.findById(userId);
-//        Optional<ProfileImage> optionalAvatar = fileUploadRepository.findByFileName(filename);
-//
-//        if (optionalUser.isPresent() && optionalAvatar.isPresent()) {
-//            ProfileImage avatar = optionalAvatar.get();
-//            User user = optionalUser.get();
-//            user.setProfileImage(avatar);
-//            return userRepository.save(user);
-//        } else {
-//            throw new RecordNotFoundException("user of avatar niet gevonden");
-//        }
-//    }
+    @Transactional
+    public User assignAvatarToUser(String filename, Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<ProfileImage> optionalAvatar = fileUploadRepository.findByFileName(filename);
+
+        if (optionalUser.isPresent() && optionalAvatar.isPresent()) {
+            ProfileImage avatar = optionalAvatar.get();
+            User user = optionalUser.get();
+            user.setProfileImage(avatar);
+            return userRepository.save(user);
+        } else {
+            throw new RecordNotFoundException("user of avatar niet gevonden");
+        }
+    }
 }
 

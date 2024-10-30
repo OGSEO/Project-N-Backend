@@ -1,6 +1,7 @@
 package nl.gelton.projectnbackend.controller;
 
 import lombok.RequiredArgsConstructor;
+//import nl.gelton.projectnbackend.dto.LikeRequest;
 import nl.gelton.projectnbackend.dto.Response;
 import nl.gelton.projectnbackend.dto.input.IdeaInputDto;
 import nl.gelton.projectnbackend.service.IdeaService;
@@ -32,13 +33,13 @@ public class IdeaController {
         return ResponseEntity.ok(ideaService.getAllIdeas());
     }
 
-    @GetMapping("/get-all-by-user")
-    public ResponseEntity<Response> getAllIdeasFromUser() {
-        return ResponseEntity.ok(ideaService.getAllIdeas());
+    @GetMapping("/get-all-by-user/{userId}")
+    public ResponseEntity<Response> getAllIdeasFromUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(ideaService.getAllIdeasByUser(userId));
     }
 
-    @GetMapping("/get-idea-by-id/{ideaId}")
-    public ResponseEntity<Response> getIdeaById(@PathVariable Long ideaId) {
+    @GetMapping("/get-idea-by-id")
+    public ResponseEntity<Response> getIdeaById(@RequestParam("ideaId") Long ideaId) {
         return ResponseEntity.ok(ideaService.getIdeaById(ideaId));
     }
 
@@ -69,6 +70,16 @@ public class IdeaController {
 //    @PostMapping("/unlike-idea")
 //    public ResponseEntity<Response> unLikeIdea(@RequestBody LikeRequest likeRequest) {
 //        return ResponseEntity.ok(ideaService.unLikeIdea(likeRequest));
+//    }
+
+        @PostMapping("/like-idea/{ideaId}")
+    public ResponseEntity<Response> likeIdea(@PathVariable Long ideaId) {
+        return ResponseEntity.ok(ideaService.likeIdea(ideaId));
+    }
+
+//    @PostMapping("/unlike-idea/{ideaId}")
+//    public ResponseEntity<Response> unLikeIdea(@PathVariable Long ideaId) {
+//        return ResponseEntity.ok(ideaService.unLikeIdea(ideaId));
 //    }
 
 

@@ -1,5 +1,7 @@
-package nl.gelton.projectnbackend.service.impl;
+package nl.gelton.projectnbackend.service;
 
+import nl.gelton.projectnbackend.model.ProfileImage;
+import nl.gelton.projectnbackend.repository.FileUploadRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

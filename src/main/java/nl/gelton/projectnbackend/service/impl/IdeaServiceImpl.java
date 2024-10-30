@@ -2,6 +2,7 @@ package nl.gelton.projectnbackend.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+//import nl.gelton.projectnbackend.dto.LikeRequest;
 import nl.gelton.projectnbackend.dto.Response;
 import nl.gelton.projectnbackend.dto.input.IdeaInputDto;
 import nl.gelton.projectnbackend.dto.mapper.CommentMapper;
@@ -107,11 +108,11 @@ public class IdeaServiceImpl implements IdeaService {
     }
 
     @Override
-    public Response getAllIdeasByUser() {
+    public Response getAllIdeasByUser(Long userId) {
 
-        User user = userService.getLoggedUser();
+//        User user = userRepository.findById(userId).orElseThrow(() -> new RecordNotFoundException("User Not Found!"));
 
-        List<Idea> ideas = ideaRepository.findByUserId(user.getId());
+        List<Idea> ideas = ideaRepository.findByUserId(userId);
         List<IdeaOutputDto> ideaOutputDtos = new ArrayList<>();
 
         for (Idea idea : ideas) {
@@ -120,34 +121,96 @@ public class IdeaServiceImpl implements IdeaService {
 
         return Response.builder()
                 .statusCode(200)
-                .statusMessage("Comments Found Successfully")
+                .statusMessage("Ideas From User Found Successfully")
                 .ideaList(ideaOutputDtos)
                 .build();
     }
 
+    @Override
+    public Response likeIdea(Long ideaId){
+        Idea idea = ideaRepository.findById(ideaId).orElseThrow(()-> new RecordNotFoundException("Idea Not Found!"));
+//        System.out.println("Begin");
+        Set<User> updateUserLikes = idea.getUserLikes();
+        System.out.println("updateUserLikes: " + updateUserLikes);
+
+        String statusMessage;
+        User user = userService.getLoggedUser();
+        System.out.println("user: " + user);
+
+        if(updateUserLikes.contains(user)){
+            updateUserLikes.remove(user);
+            idea.setUserLikes(updateUserLikes);
+//            Set<Idea> likedIdeas = user.getLikedIdeas();
+//            likedIdeas.remove(idea);
+//            user.setLikedIdeas(likedIdeas);
+            statusMessage = "Idea already Liked";
+        } else {
+            updateUserLikes.add(userService.getLoggedUser());
+            idea.setUserLikes(updateUserLikes);
+            statusMessage =  "Idea Liked Successfully";
+        }
+        System.out.println("statusmsg: " + statusMessage);
+
+        System.out.println("updateUserLikes: " + updateUserLikes);
+
+        ideaRepository.save(idea);
+
+
+//        if (updateUserLikes.contains(user)) {
+//            idea.setUserLikes(updateUserLikes);
+//        } else {
+//            updateUserLikes.add(user);
+//            idea.setUserLikes(updateUserLikes);
+//        }
+
+//        System.out.println("like idea na add: " + updateUserLikes.size());
+//
+//        System.out.println(" idea na add: " + idea.getUserLikes());
+
+        return Response.builder()
+                .statusCode(200)
+                .statusMessage(statusMessage)
+                .idea(IdeaMapper.fromModelToOutputDto(idea))
+                .build();
+    }
+
 //    @Override
-//    public Response likeIdea(LikeRequest likeRequest){
-//        Idea idea = ideaRepository.findById(likeRequest.getIdeaId()).orElseThrow(()-> new RecordNotFoundException("Idea Not Found!"));
-//        User user = userRepository.findById(likeRequest.getUserId()).orElseThrow(()-> new RecordNotFoundException("User Not Found!"));
-//        Set<User> userLikes= idea.getUserLikes();
-//        userLikes.add(user);
-//        idea.setUserLikes(userLikes);
+//    public Response unLikeIdea(Long ideaId){
+//
+//        Idea idea = ideaRepository.findById(ideaId).orElseThrow(()-> new RecordNotFoundException("Idea Not Found!"));
+//        System.out.println("Begin");
+//        Set<User> updateUserLikes = idea.getUserLikes();
+//
+//        System.out.println("Eind");
+//        String statusMessage;
+//
+//        if(updateUserLikes.contains(userService.getLoggedUser())){
+//            updateUserLikes.remove(userService.getLoggedUser());
+//            idea.setUserLikes(updateUserLikes);
+//            statusMessage = "Idea UnLiked Successfully";
+//        } else {
+//            updateUserLikes.add(userService.getLoggedUser());
+//            idea.setUserLikes(updateUserLikes);
+//            statusMessage =  "Idea already UnLiked";
+//        }
+//
 //        ideaRepository.save(idea);
 //
 //        return Response.builder()
 //                .statusCode(200)
-//                .statusMessage("Like toegevoegd")
+//                .statusMessage(statusMessage)
 //                .idea(IdeaMapper.fromModelToOutputDto(idea))
 //                .build();
 //    }
-//
-//    @Override
-//    public Response unLikeIdea(LikeRequest likeRequest){
-//        Idea idea = ideaRepository.findById(likeRequest.getIdeaId()).orElseThrow(()-> new RecordNotFoundException("Idea Not Found!"));
-//        User user = userRepository.findById(likeRequest.getUserId()).orElseThrow(()-> new RecordNotFoundException("User Not Found!"));
+//        Idea idea = ideaRepository.findById(ideaId).orElseThrow(()-> new RecordNotFoundException("Idea Not Found!"));
+//        User user = userRepository.findById(userId).orElseThrow(()-> new RecordNotFoundException("User Not Found!"));
 //        Set<User> userLikes= idea.getUserLikes();
-//        userLikes.remove(user);
-//        idea.setUserLikes(userLikes);
+//        if (userLikes.contains(user)) {
+//            userLikes.remove(user);
+//            idea.setUserLikes(userLikes);
+//        } else {
+//            idea.setUserLikes(userLikes);
+//        }
 //        ideaRepository.save(idea);
 //
 //        return Response.builder()

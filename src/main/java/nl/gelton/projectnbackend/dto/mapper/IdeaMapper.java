@@ -6,6 +6,7 @@ import nl.gelton.projectnbackend.dto.output.IdeaOutputDto;
 import nl.gelton.projectnbackend.dto.output.UserOutputDto;
 import nl.gelton.projectnbackend.model.Comment;
 import nl.gelton.projectnbackend.model.Idea;
+import nl.gelton.projectnbackend.model.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,17 +29,18 @@ public class IdeaMapper {
         ideaOutputDto.setTitle(idea.getTitle());
         ideaOutputDto.setDescription(idea.getDescription());
         ideaOutputDto.setCreatedAt(idea.getCreatedAt());
-        ideaOutputDto.setUser(UserMapper.fromModelToOutputDto(idea.getUser()));
+        ideaOutputDto.setUser(UserMapper.fromModelToOutputDto(idea.getUser()).getName());
 //        ideaOutputDto.setComments(CommentMapper.fromModelToOutputDto(idea.getComments()));
 
 
-////        if (idea.getUserLikes() != null) {
-//        Set<UserOutputDto> userLikeDtos = new HashSet<>();
-//        Set<User> userLikes = idea.getUserLikes();
-//        for (User user : userLikes) {
-//            userLikeDtos.add(UserMapper.fromModelToOutputDto(user));
-//        }
-//        ideaOutputDto.setUserLikes(userLikeDtos);
+//        if (idea.getUserLikes() != null) {
+        Set<String> userLikeDtos = new HashSet<>();
+        Set<User> userLikes = idea.getUserLikes();
+        System.out.println("userLikes: " +userLikes.size());
+        for (User user : userLikes) {
+            userLikeDtos.add(UserMapper.fromModelToOutputDto(user).getName());
+        }
+        ideaOutputDto.setUserLikes(userLikeDtos);
 
 //        List<CommentOutputDto> comments = new ArrayList<>();
 //        List<Comment> commentList = idea.getComments();
