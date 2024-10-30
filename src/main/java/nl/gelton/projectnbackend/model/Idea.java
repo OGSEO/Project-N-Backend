@@ -40,20 +40,16 @@ public class Idea extends BaseEntity {
 //    private List<PoliticalParty> politicalPartyLikes = new ArrayList<>();
 
 
-
-
     @ManyToOne
     @JoinColumn(name = "user_owner")
     private User user;
 
-
-
     @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "ideas_users",
-//            joinColumns = @JoinColumn(name = "idea_liked"),
-//            inverseJoinColumns = @JoinColumn(name = "user_liked")
-//    )
+    @JoinTable(
+            name = "ideas_users",
+            joinColumns = @JoinColumn(name = "idea_liked"),
+            inverseJoinColumns = @JoinColumn(name = "user_liked")
+    )
     private Set<User> userLikes = new HashSet<>();
 
 }

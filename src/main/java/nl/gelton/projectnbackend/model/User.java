@@ -1,19 +1,13 @@
 package nl.gelton.projectnbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import nl.gelton.projectnbackend.enums.UserRole;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -49,17 +43,12 @@ public class User extends BaseEntity{
     @JoinColumn(name = "political_party_id")
     private PoliticalParty politicalParty;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Idea> ideas = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-//    @JsonIgnore
-    @ManyToMany(mappedBy = "userLikes", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private Set<Idea> likedIdeas = new HashSet<>();
 
 }
 

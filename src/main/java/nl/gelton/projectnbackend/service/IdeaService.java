@@ -1,6 +1,5 @@
 package nl.gelton.projectnbackend.service;
 
-//import nl.gelton.projectnbackend.dto.LikeRequest;
 import nl.gelton.projectnbackend.dto.Response;
 import nl.gelton.projectnbackend.dto.input.IdeaInputDto;
 
@@ -20,7 +19,5 @@ public interface IdeaService {
 
     Response likeIdea(Long ideaId);
 
-//    Response unLikeIdea(Long ideaId);
-//
-//    Response getAllIdeasFromUser(Long userId);
+    Response unLikeIdea(Long ideaId);
 }

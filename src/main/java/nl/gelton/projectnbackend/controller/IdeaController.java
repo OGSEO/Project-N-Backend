@@ -77,10 +77,10 @@ public class IdeaController {
         return ResponseEntity.ok(ideaService.likeIdea(ideaId));
     }
 
-//    @PostMapping("/unlike-idea/{ideaId}")
-//    public ResponseEntity<Response> unLikeIdea(@PathVariable Long ideaId) {
-//        return ResponseEntity.ok(ideaService.unLikeIdea(ideaId));
-//    }
+    @PostMapping("/unlike-idea/{ideaId}")
+    public ResponseEntity<Response> unLikeIdea(@PathVariable Long ideaId) {
+        return ResponseEntity.ok(ideaService.unLikeIdea(ideaId));
+    }
 
 
 

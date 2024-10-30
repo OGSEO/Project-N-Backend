@@ -23,8 +23,4 @@ public class BaseEntity {
     private Long id;
 
     private LocalDateTime createdAt;
-//    private LocalDateTime lastModifiedAt;
-
-//    private String createdBy;
-//    private String lastModifiedBy;
 }
