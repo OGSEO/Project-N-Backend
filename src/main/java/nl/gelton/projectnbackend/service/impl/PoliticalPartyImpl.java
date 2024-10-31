@@ -9,6 +9,7 @@ import nl.gelton.projectnbackend.dto.output.PoliticalPartyOutputDto;
 import nl.gelton.projectnbackend.model.PoliticalParty;
 import nl.gelton.projectnbackend.model.User;
 import nl.gelton.projectnbackend.repository.PoliticalPartyRepository;
+import nl.gelton.projectnbackend.repository.UserRepository;
 import nl.gelton.projectnbackend.service.PoliticalPartyService;
 import nl.gelton.projectnbackend.service.UserService;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class PoliticalPartyImpl implements PoliticalPartyService {
 
     private final PoliticalPartyRepository politicalPartyRepository;
     private final UserService userService;
+//    private final UserRepository userRepository;  //Edit
 
     @Override
     public Response createPoliticalParty(PoliticalPartyInputDto politicalPartyInputDto) {
@@ -31,7 +33,9 @@ public class PoliticalPartyImpl implements PoliticalPartyService {
         PoliticalParty politicalParty = PoliticalPartyMapper.fromInputDtoToModel(politicalPartyInputDto);
         politicalParty.setUser(user);
         politicalParty.setCreatedAt(LocalDateTime.now());
+//        user.setPoliticalParty(politicalParty); //Edit
         politicalPartyRepository.save(politicalParty);
+//        userRepository.save(user); //Edit
 
         return Response.builder()
                 .statusCode(200)

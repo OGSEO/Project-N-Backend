@@ -21,6 +21,9 @@ public class UserMapper {
         userOutputDto.setName(user.getName());
         userOutputDto.setEmail(user.getEmail());
         userOutputDto.setRole(user.getRole());
+//        if(user.getPoliticalParty() != null) {
+//            userOutputDto.setPoliticalParty(PoliticalPartyMapper.fromModelToOutputDto(user.getPoliticalParty()));  //Edit
+//        }
         return userOutputDto;
     }
 

@@ -32,12 +32,13 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/**", "/idea/**", "/political-party/**", "/comment/**", "/action/**").permitAll()
+                        .requestMatchers("/auth/**", "/idea/**", "/political-party/**", "/comment/**", "/action/**", "/user/{id}/avatar").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+
     }
 
     @Bean

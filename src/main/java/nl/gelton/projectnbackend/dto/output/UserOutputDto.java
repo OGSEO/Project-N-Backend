@@ -23,7 +23,7 @@ public class UserOutputDto {
     private UserRole role;
     private AddressOutputDto Address;
 //    private ProfileImage profileImage;
-//    private PoliticalPartyOutputDto politicalParty;
+//    private PoliticalPartyOutputDto politicalParty; //Edit
 //    private List<IdeaOutputDto> ideas;
 //    private Set<IdeaOutputDto> likedIdeas;
     //    private List<CommentOutputDto> comments;

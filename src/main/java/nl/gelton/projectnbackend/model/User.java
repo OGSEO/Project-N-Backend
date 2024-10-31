@@ -1,5 +1,6 @@
 package nl.gelton.projectnbackend.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -41,6 +42,7 @@ public class User extends BaseEntity{
 
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "user")
     @JoinColumn(name = "political_party_id")
+    @Nullable
     private PoliticalParty politicalParty;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
