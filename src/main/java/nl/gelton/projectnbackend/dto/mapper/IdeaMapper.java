@@ -6,6 +6,7 @@ import nl.gelton.projectnbackend.dto.output.IdeaOutputDto;
 import nl.gelton.projectnbackend.dto.output.UserOutputDto;
 import nl.gelton.projectnbackend.model.Comment;
 import nl.gelton.projectnbackend.model.Idea;
+import nl.gelton.projectnbackend.model.PoliticalParty;
 import nl.gelton.projectnbackend.model.User;
 
 import java.util.ArrayList;
@@ -41,6 +42,13 @@ public class IdeaMapper {
             userLikeDtos.add(UserMapper.fromModelToOutputDto(user).getName());
         }
         ideaOutputDto.setUserLikes(userLikeDtos);
+
+        Set<String> politicalSupportDtos = new HashSet<>();
+        Set<PoliticalParty> politicalSupports = idea.getPoliticalSupports();
+        for (PoliticalParty p : politicalSupports) {
+            politicalSupportDtos.add(PoliticalPartyMapper.fromModelToOutputDto(p).getName());
+        }
+        ideaOutputDto.setPoliticalSupports(politicalSupportDtos);
 
 //        List<CommentOutputDto> comments = new ArrayList<>();
 //        List<Comment> commentList = idea.getComments();

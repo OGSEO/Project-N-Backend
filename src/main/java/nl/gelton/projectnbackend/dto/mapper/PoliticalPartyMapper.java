@@ -19,7 +19,7 @@ public class PoliticalPartyMapper {
         politicalPartyOutputDto.setName(politicalParty.getName());
         politicalPartyOutputDto.setDescription(politicalParty.getDescription());
         politicalPartyOutputDto.setCreatedAt(politicalParty.getCreatedAt());
-        politicalPartyOutputDto.setUser(UserMapper.fromModelToOutputDto(politicalParty.getUser()));
+        politicalPartyOutputDto.setUser(UserMapper.fromModelToOutputDto(politicalParty.getUser()).getName()); //eeddiitt
         return politicalPartyOutputDto;
     }
 }

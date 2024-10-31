@@ -13,9 +13,11 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @SuperBuilder
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Table(name = "users")
 public class User extends BaseEntity{
 
@@ -40,10 +42,9 @@ public class User extends BaseEntity{
     @JoinColumn(name = "profile_image")
     private ProfileImage profileImage;
 
-    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "user")
-    @JoinColumn(name = "political_party_id")
-    @Nullable
-    private PoliticalParty politicalParty;
+//    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "user")
+//    @JoinColumn(name = "political_party_id")
+//    private PoliticalParty politicalParty;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Idea> ideas = new ArrayList<>();

@@ -1,7 +1,6 @@
 package nl.gelton.projectnbackend.controller;
 
 import lombok.RequiredArgsConstructor;
-//import nl.gelton.projectnbackend.dto.LikeRequest;
 import nl.gelton.projectnbackend.dto.Response;
 import nl.gelton.projectnbackend.dto.input.IdeaInputDto;
 import nl.gelton.projectnbackend.service.IdeaService;
@@ -60,19 +59,8 @@ public class IdeaController {
     public ResponseEntity<Response> deleteIdea(@PathVariable Long ideaId) {
         return ResponseEntity.ok(ideaService.deleteIdea(ideaId));
     }
-//
 
-//    @PostMapping("/like-idea")
-//    public ResponseEntity<Response> likeIdea(@RequestBody LikeRequest likeRequest) {
-//        return ResponseEntity.ok(ideaService.likeIdea(likeRequest));
-//    }
-//
-//    @PostMapping("/unlike-idea")
-//    public ResponseEntity<Response> unLikeIdea(@RequestBody LikeRequest likeRequest) {
-//        return ResponseEntity.ok(ideaService.unLikeIdea(likeRequest));
-//    }
-
-        @PostMapping("/like-idea/{ideaId}")
+    @PostMapping("/like-idea/{ideaId}")
     public ResponseEntity<Response> likeIdea(@PathVariable Long ideaId) {
         return ResponseEntity.ok(ideaService.likeIdea(ideaId));
     }
@@ -82,6 +70,14 @@ public class IdeaController {
         return ResponseEntity.ok(ideaService.unLikeIdea(ideaId));
     }
 
+    @PostMapping("/support-idea/{ideaId}")
+    public ResponseEntity<Response> supportIdea(@PathVariable Long ideaId) {
+        return ResponseEntity.ok(ideaService.supportIdea(ideaId));
+    }
 
+    @PostMapping("/unsupport-idea/{ideaId}")
+    public ResponseEntity<Response> unSupportIdea(@PathVariable Long ideaId) {
+        return ResponseEntity.ok(ideaService.unSupportIdea(ideaId));
+    }
 
 }

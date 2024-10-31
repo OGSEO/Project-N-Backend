@@ -26,6 +26,7 @@ public class CommentController {
     public ResponseEntity<Response> getAllIdeas(@PathVariable Long ideaId) {
         return ResponseEntity.ok(commentService.getAllCommentsByIdea(ideaId));
     }
+
 //
 //    @PutMapping("/update/{commentId}")
 //    @PreAuthorize("hasAuthority('CITIZEN')")

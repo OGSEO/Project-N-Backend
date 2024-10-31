@@ -25,15 +25,19 @@ public class PoliticalPartyImpl implements PoliticalPartyService {
 
     private final PoliticalPartyRepository politicalPartyRepository;
     private final UserService userService;
-//    private final UserRepository userRepository;  //Edit
+    private final UserRepository userRepository;  //Edit
 
     @Override
     public Response createPoliticalParty(PoliticalPartyInputDto politicalPartyInputDto) {
         User user = userService.getLoggedUser();
+
+//        PoliticalParty politicalParty = new PoliticalParty();  //Edit
         PoliticalParty politicalParty = PoliticalPartyMapper.fromInputDtoToModel(politicalPartyInputDto);
         politicalParty.setUser(user);
         politicalParty.setCreatedAt(LocalDateTime.now());
 //        user.setPoliticalParty(politicalParty); //Edit
+
+
         politicalPartyRepository.save(politicalParty);
 //        userRepository.save(user); //Edit
 

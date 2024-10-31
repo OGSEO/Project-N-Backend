@@ -20,4 +20,8 @@ public interface IdeaService {
     Response likeIdea(Long ideaId);
 
     Response unLikeIdea(Long ideaId);
+
+    Response supportIdea(Long ideaId);
+
+    Response unSupportIdea(Long ideaId);
 }

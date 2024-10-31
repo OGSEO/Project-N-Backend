@@ -18,7 +18,7 @@ public class PoliticalPartyOutputDto {
     private Long id;
     private String name;
     private String description;
-    private UserOutputDto user;
+    private String user;  //eeddiitt
 //    private ProfileImage logo;
     private LocalDateTime createdAt;
 }

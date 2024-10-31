@@ -8,8 +8,10 @@ import nl.gelton.projectnbackend.dto.mapper.IdeaMapper;
 import nl.gelton.projectnbackend.dto.output.IdeaOutputDto;
 import nl.gelton.projectnbackend.exception.RecordNotFoundException;
 import nl.gelton.projectnbackend.model.Idea;
+import nl.gelton.projectnbackend.model.PoliticalParty;
 import nl.gelton.projectnbackend.model.User;
 import nl.gelton.projectnbackend.repository.IdeaRepository;
+import nl.gelton.projectnbackend.repository.PoliticalPartyRepository;
 import nl.gelton.projectnbackend.repository.UserRepository;
 import nl.gelton.projectnbackend.service.IdeaService;
 import nl.gelton.projectnbackend.service.UserService;
@@ -26,6 +28,7 @@ public class IdeaServiceImpl implements IdeaService {
     private final IdeaRepository ideaRepository;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final PoliticalPartyRepository politicalPartyRepository;
 
 
     @Override
@@ -117,16 +120,12 @@ public class IdeaServiceImpl implements IdeaService {
 
     @Override
     public Response likeIdea(Long ideaId){
-        System.out.println("idea Id: " + ideaId);
-        Idea ideaToLike = ideaRepository.findById(ideaId).orElseThrow(()-> new RecordNotFoundException("Idea Not Found!"));
-        System.out.println("idea to like: " + ideaToLike);
+        Idea ideaToLike = ideaRepository.findById(ideaId).orElseThrow(() -> new RecordNotFoundException("Idea Not Found!"));
 
         Set<User> updateUserLikes = ideaToLike.getUserLikes();
-        System.out.println("(update)userLikes: " + updateUserLikes);
 
         String statusMessage;
         User user = userService.getLoggedUser();
-        System.out.println("user who wanna like: " + user);
 
         if(updateUserLikes.contains(user)){
             statusMessage = "Idea already Liked";
@@ -135,9 +134,6 @@ public class IdeaServiceImpl implements IdeaService {
             ideaToLike.setUserLikes(updateUserLikes);
             statusMessage =  "Idea Liked Successfully";
         }
-
-        System.out.println("UPDATED: (update)userLikes: " + updateUserLikes);
-        System.out.println("user who has liked: " + user);
 
         ideaRepository.save(ideaToLike);
 
@@ -149,8 +145,34 @@ public class IdeaServiceImpl implements IdeaService {
     }
 
     @Override
-    public Response unLikeIdea(Long ideaId){
-        Idea ideaToUnLike = ideaRepository.findById(ideaId).orElseThrow(()-> new RecordNotFoundException("Idea Not Found!"));
+    public Response supportIdea(Long ideaId) {
+        Idea ideaToSupport = ideaRepository.findById(ideaId).orElseThrow(() -> new RecordNotFoundException("Idea Not Found!"));
+
+        Set<PoliticalParty> updatePoliticalSupports = ideaToSupport.getPoliticalSupports();
+
+        String statusMessage;
+        User user = userService.getLoggedUser();
+        PoliticalParty politicalParty = politicalPartyRepository.findByUserId(user.getId());
+//        PoliticalParty politicalParty = user.getPoliticalParty();
+        if(updatePoliticalSupports.contains(politicalParty)){
+            statusMessage = "Idea already Support";
+        } else {
+            updatePoliticalSupports.add(politicalParty);
+            ideaToSupport.setPoliticalSupports(updatePoliticalSupports);
+            statusMessage =  "Idea Supported Successfully";
+        }
+        ideaRepository.save(ideaToSupport);
+
+        return Response.builder()
+                .statusCode(200)
+                .statusMessage(statusMessage)
+                .idea(IdeaMapper.fromModelToOutputDto(ideaToSupport))
+                .build();
+    }
+
+    @Override
+    public Response unLikeIdea(Long ideaId) {
+        Idea ideaToUnLike = ideaRepository.findById(ideaId).orElseThrow(() -> new RecordNotFoundException("Idea Not Found!"));
 
         Set<User> updateUserLikes = ideaToUnLike.getUserLikes();
 
@@ -172,5 +194,34 @@ public class IdeaServiceImpl implements IdeaService {
                 .statusMessage(statusMessage)
                 .idea(IdeaMapper.fromModelToOutputDto(ideaToUnLike))
                 .build();
+    }
+
+    @Override
+    public Response unSupportIdea(Long ideaId) {
+        Idea ideaToUnSupport = ideaRepository.findById(ideaId).orElseThrow(() -> new RecordNotFoundException("Idea Not Found!"));
+
+        Set<PoliticalParty> updatePolitcalSupports = ideaToUnSupport.getPoliticalSupports();
+
+        String statusMessage;
+        User user = userService.getLoggedUser();
+        PoliticalParty politicalParty = politicalPartyRepository.findByUserId(user.getId());
+//        PoliticalParty politicalParty = user.getPoliticalParty();
+
+        if(updatePolitcalSupports.contains(politicalParty)){
+            updatePolitcalSupports.remove(politicalParty);
+            ideaToUnSupport.setPoliticalSupports(updatePolitcalSupports);
+            statusMessage = "Idea unSupported Successfully";
+        } else {
+            statusMessage =  "Idea already unSupported";
+        }
+
+        ideaRepository.save(ideaToUnSupport);
+
+        return Response.builder()
+                .statusCode(200)
+                .statusMessage(statusMessage)
+                .idea(IdeaMapper.fromModelToOutputDto(ideaToUnSupport))
+                .build();
+
     }
 }

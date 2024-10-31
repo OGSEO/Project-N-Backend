@@ -1,14 +1,11 @@
 package nl.gelton.projectnbackend.model;
 
-import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 
 import java.util.HashSet;
 import java.util.Set;
-
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -27,19 +24,6 @@ public class Idea extends BaseEntity {
 //    @OneToMany(mappedBy = "idea", cascade = CascadeType.REMOVE)
 //    private List<Comment> comments = new ArrayList<>();
 
-
-//    @ManyToMany
-//    @JoinTable(
-//            name = "ideas_political_partys",
-//            joinColumns = {
-//                    @JoinColumn(name = "idea")
-//            },
-//            inverseJoinColumns = {
-//                    @JoinColumn(name = "party")
-//            })
-//    private List<PoliticalParty> politicalPartyLikes = new ArrayList<>();
-
-
     @ManyToOne
     @JoinColumn(name = "user_owner")
     private User user;
@@ -51,5 +35,13 @@ public class Idea extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "user_liked")
     )
     private Set<User> userLikes = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "ideas_political_partys",
+            joinColumns = @JoinColumn(name = "idea_supported"),
+            inverseJoinColumns = @JoinColumn(name = "party_support")
+    )
+    private Set<PoliticalParty> politicalSupports = new HashSet<>();
 
 }

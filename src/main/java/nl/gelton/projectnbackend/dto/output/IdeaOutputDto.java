@@ -21,7 +21,7 @@ public class IdeaOutputDto {
     private String description;
     private String user;
 //      private List<CommentOutputDto> comments;
-//    private Set<PoliticalPartyOutputDto> politicalLikes;
     private Set<String> userLikes;
+    private Set<String> politicalSupports;
     private LocalDateTime createdAt;
 }
