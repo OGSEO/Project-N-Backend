@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class PoliticalPartyImpl implements PoliticalPartyService {
+public class PoliticalPartyServiceImpl implements PoliticalPartyService {
 
     private final PoliticalPartyRepository politicalPartyRepository;
     private final UserService userService;
@@ -36,10 +36,12 @@ public class PoliticalPartyImpl implements PoliticalPartyService {
         politicalParty.setUser(user);
         politicalParty.setCreatedAt(LocalDateTime.now());
 //        user.setPoliticalParty(politicalParty); //Edit
+        user.setHasParty(true);
+        user.setPartyName(politicalPartyInputDto.getName());
 
 
         politicalPartyRepository.save(politicalParty);
-//        userRepository.save(user); //Edit
+        userRepository.save(user); //Edit
 
         return Response.builder()
                 .statusCode(200)

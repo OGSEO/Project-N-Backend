@@ -1,6 +1,5 @@
 package nl.gelton.projectnbackend.model;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -19,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 
 @Table(name = "users")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -38,7 +37,7 @@ public class User extends BaseEntity{
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+        @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "profile_image")
     private ProfileImage profileImage;
 
@@ -51,6 +50,13 @@ public class User extends BaseEntity{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
+
+
+    private boolean hasParty;
+    private boolean hasProfileImage;
+
+    private String imgUrl;
+    private String partyName;
 
 
 }

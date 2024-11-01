@@ -16,7 +16,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/create/{ideaId}")
-    @PreAuthorize("hasAuthority('CITIZEN')")
+    @PreAuthorize("hasAnyAuthority('POLITICIAN', 'CITIZEN')")
     public ResponseEntity<Response> createComment(@RequestBody CommentInputDto commentInputDto,
                                                   @PathVariable Long ideaId) {
         return ResponseEntity.ok(commentService.createComment(commentInputDto, ideaId));

@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
 
         return Response.builder()
                 .statusCode(200)
-                .statusMessage("User info with address found")
+                .statusMessage("User info found")
                 .user(userOutputDto)
                 .build();
     }
@@ -143,6 +143,8 @@ public class UserServiceImpl implements UserService {
             ProfileImage avatar = optionalAvatar.get();
             User user = optionalUser.get();
             user.setProfileImage(avatar);
+            user.setHasProfileImage(true);
+            user.setImgUrl("http://localhost:8080/user/" + userId + "/avatar");
             return userRepository.save(user);
         } else {
             throw new RecordNotFoundException("user of avatar niet gevonden");

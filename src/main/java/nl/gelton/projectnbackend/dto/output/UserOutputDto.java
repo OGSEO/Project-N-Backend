@@ -22,6 +22,10 @@ public class UserOutputDto {
     private String email;
     private UserRole role;
     private AddressOutputDto Address;
+    private boolean hasParty;
+    private boolean hasProfileImage;
+    private String imgUrl;
+    private String partyName;
 //    private ProfileImage profileImage;
 //    private PoliticalPartyOutputDto politicalParty; //Edit
 //    private List<IdeaOutputDto> ideas;

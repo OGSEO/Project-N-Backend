@@ -21,6 +21,13 @@ public class UserMapper {
         userOutputDto.setName(user.getName());
         userOutputDto.setEmail(user.getEmail());
         userOutputDto.setRole(user.getRole());
+        userOutputDto.setHasParty(user.isHasParty());
+        userOutputDto.setImgUrl(user.getImgUrl());
+        userOutputDto.setHasProfileImage(user.isHasProfileImage());
+        userOutputDto.setPartyName(user.getPartyName());
+//        if(user.getProfileImage() == null){
+//            userOutputDto.setHasProfileImage(false);
+//        }
 //        if(user.getPoliticalParty() != null) {
 //            userOutputDto.setPoliticalParty(PoliticalPartyMapper.fromModelToOutputDto(user.getPoliticalParty()));  //Edit
 //        }
